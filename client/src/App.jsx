@@ -7,7 +7,10 @@ import AIAssistant from './components/common/AIAssistant';
 // Pages
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import PropertyListPage from './pages/PropertyListPage';
+import PropertyDetailPage from './pages/PropertyDetailPage';
 
 // Placeholder components for other routes
 const PlaceholderPage = ({ title }) => (
@@ -29,9 +32,9 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<PlaceholderPage title="Register" />} />
-            <Route path="/properties" element={<PlaceholderPage title="Properties" />} />
-            <Route path="/property/:id" element={<PlaceholderPage title="Property Details" />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/properties" element={<PropertyListPage />} />
+            <Route path="/property/:id" element={<PropertyDetailPage />} />
             <Route path="/experiences" element={<PlaceholderPage title="Experiences" />} />
             <Route path="/about" element={<PlaceholderPage title="About Us" />} />
             <Route path="/contact" element={<PlaceholderPage title="Contact" />} />
