@@ -5,8 +5,7 @@ node_modules/
 dist/
 build/
 
-# Environment files
-.env
+# Environment files (production env can be set in Vercel dashboard)
 .env.local
 .env.production
 
