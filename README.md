@@ -7,6 +7,7 @@ A collection of small Java projects for learning and practice.
 | Project | Description |
 |---------|-------------|
 | [miniProGame1](miniProGame1/) | Mini Memory Game - Console-based card matching game |
+| [miniProGame4](miniProGame4/) | Inventory Management System - Console-based item manager |
 
 ## How to Run Each Project
 
