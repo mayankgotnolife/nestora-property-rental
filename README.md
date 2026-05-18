@@ -37,7 +37,7 @@ Flow:
 
 ## Setup Instructions
 ### Prerequisites
-- Node.js (recommended v18+)
+- Node.js (v14+ supported, v18+ recommended)
 - npm
 - MongoDB (local or Atlas)
 - Cloudinary account (for image upload)
@@ -182,6 +182,8 @@ nestora-property-rental/
 │   ├── socket/
 │   ├── server.js
 │   └── package.json
+├── docs/
+│   └── screenshots/       # optional: UI screenshots for README
 ├── TODO.md
 └── README.md
 ```
