@@ -146,17 +146,16 @@ Base URL: `http://localhost:5000/api`
 - `DELETE /messages/:id` — Delete message
 
 ## Screenshots
-No screenshots are currently committed to this repository.
+No screenshots are currently committed.  
+Use `docs/screenshots/` and update the links below when images are added.
 
-You can add them in a folder like:
-`docs/screenshots/`
-
-Suggested captures:
-- Home page
-- Property listing page
-- Property detail page
-- Booking dashboard
-- Chat screen
+| Screen | Preview |
+|---|---|
+| Home page | `docs/screenshots/home.png` |
+| Property listing | `docs/screenshots/property-list.png` |
+| Property detail | `docs/screenshots/property-detail.png` |
+| Booking dashboard | `docs/screenshots/booking-dashboard.png` |
+| Chat screen | `docs/screenshots/chat.png` |
 
 ## Folder Structure
 ```text
