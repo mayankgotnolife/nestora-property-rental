@@ -44,15 +44,15 @@ Flow:
 
 ### 1) Clone and install dependencies
 ```bash
-cd /home/runner/work/nestora-property-rental/nestora-property-rental/server
+cd server
 npm install
 
-cd /home/runner/work/nestora-property-rental/nestora-property-rental/client
+cd ../client
 npm install
 ```
 
 ### 2) Configure environment variables
-Create: `/home/runner/work/nestora-property-rental/nestora-property-rental/server/.env`
+Create: `server/.env`
 
 ```env
 PORT=5000
@@ -67,7 +67,7 @@ NODE_ENV=development
 ```
 
 Optional frontend env file:  
-`/home/runner/work/nestora-property-rental/nestora-property-rental/client/.env`
+`client/.env`
 
 ```env
 VITE_API_URL=http://localhost:5000/api
@@ -77,11 +77,11 @@ VITE_SOCKET_URL=http://localhost:5000
 ### 3) Run the app
 ```bash
 # terminal 1
-cd /home/runner/work/nestora-property-rental/nestora-property-rental/server
+cd server
 npm run dev
 
 # terminal 2
-cd /home/runner/work/nestora-property-rental/nestora-property-rental/client
+cd client
 npm run dev
 ```
 
@@ -149,7 +149,7 @@ Base URL: `http://localhost:5000/api`
 No screenshots are currently committed to this repository.
 
 You can add them in a folder like:
-`/home/runner/work/nestora-property-rental/nestora-property-rental/docs/screenshots/`
+`docs/screenshots/`
 
 Suggested captures:
 - Home page
