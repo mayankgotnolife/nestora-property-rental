@@ -1,179 +1,196 @@
-# House Rent App - MERN Stack Application
+# Nestora Property Rental
 
-A full-stack rental property management application built with MongoDB, Express, React, and Node.js.
+## Overview
+Nestora is a full-stack property rental platform where tenants can browse listings, request bookings, review properties, and chat in real time with landlords/agents.  
+It supports role-based access (tenant, landlord, agent, admin), property lifecycle management, booking workflows, and secure authentication.
 
-## Features
+## Architecture
+- **Frontend (`client`)**: React + Vite single-page application
+- **Backend (`server`)**: Express REST API with Socket.IO
+- **Database**: MongoDB via Mongoose
+- **Media**: Cloudinary image storage through Multer
+- **Auth**: JWT-based authentication and role authorization middleware
 
-- **User Authentication**: Register, login, logout with JWT tokens
-- **Role-based Access Control**: Tenant, Landlord, and Agent roles
-- **Property Management**: Create, read, update, delete property listings
-- **Search & Filter**: Filter properties by city, price, bedrooms, bathrooms, etc.
-- **Booking System**: Request bookings, approve/reject bookings
-- **Real-time Chat**: Socket.io powered messaging system
-- **Reviews & Ratings**: Leave reviews for properties
+Flow:
+1. Client sends REST requests to `/api/*`.
+2. Express routes invoke controllers and Mongoose models.
+3. Protected routes validate JWT and user roles.
+4. Socket.IO handles live messaging and unread updates.
 
 ## Tech Stack
+### Frontend
+- React 18
+- Vite
+- React Router DOM
+- Axios
+- Socket.IO Client
+- Tailwind CSS
 
 ### Backend
 - Node.js
 - Express.js
-- MongoDB with Mongoose
-- JWT for authentication
-- Socket.io for real-time communication
-- Cloudinary for image uploads
-- Multer for file handling
+- MongoDB + Mongoose
+- JWT (`jsonwebtoken`)
+- Socket.IO
+- Multer + Cloudinary
+- Helmet, CORS, Morgan
 
-### Frontend
-- React with Vite
-- React Router for navigation
-- Axios for API calls
-- Socket.io-client for real-time chat
-- CSS for styling
+## Setup Instructions
+### Prerequisites
+- Node.js (recommended v18+)
+- npm
+- MongoDB (local or Atlas)
+- Cloudinary account (for image upload)
 
-## Project Structure
+### 1) Clone and install dependencies
+```bash
+cd /home/runner/work/nestora-property-rental/nestora-property-rental/server
+npm install
 
+cd /home/runner/work/nestora-property-rental/nestora-property-rental/client
+npm install
 ```
-house-rent-app/
-├── server/                 # Backend server
-│   ├── config/            # Database & cloudinary config
-│   ├── models/           # Mongoose models
-│   ├── routes/           # API routes
-│   ├── middleware/       # Auth, role, upload middleware
-│   ├── controllers/      # Business logic
-│   ├── socket/           # Socket.io logic
-│   └── server.js         # Entry point
-│
-├── client/                # Frontend React app
+
+### 2) Configure environment variables
+Create: `/home/runner/work/nestora-property-rental/nestora-property-rental/server/.env`
+
+```env
+PORT=5000
+MONGODB_URI=your-mongodb-uri
+JWT_SECRET=your-secret-key
+JWT_EXPIRE=7d
+CLIENT_URL=http://localhost:5173
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+NODE_ENV=development
+```
+
+Optional frontend env file:  
+`/home/runner/work/nestora-property-rental/nestora-property-rental/client/.env`
+
+```env
+VITE_API_URL=http://localhost:5000/api
+VITE_SOCKET_URL=http://localhost:5000
+```
+
+### 3) Run the app
+```bash
+# terminal 1
+cd /home/runner/work/nestora-property-rental/nestora-property-rental/server
+npm run dev
+
+# terminal 2
+cd /home/runner/work/nestora-property-rental/nestora-property-rental/client
+npm run dev
+```
+
+Open: `http://localhost:5173`
+
+## API Explanation
+Base URL: `http://localhost:5000/api`
+
+### Authentication
+- `POST /auth/register` — Register user
+- `POST /auth/login` — Login and receive JWT
+- `GET /auth/logout` — Logout
+- `GET /auth/me` — Current user (protected)
+- `PUT /auth/profile` — Update profile (protected)
+- `PUT /auth/password` — Change password (protected)
+
+### Users
+- `GET /users/me` — Current profile (protected)
+- `PUT /users/me` — Update own profile (protected)
+- Admin routes:
+  - `GET /users`
+  - `POST /users`
+  - `GET /users/:id`
+  - `PUT /users/:id`
+  - `DELETE /users/:id`
+
+### Properties
+- `GET /properties` — List/search properties
+- `GET /properties/featured` — Featured properties
+- `GET /properties/:id` — Property details
+- `POST /properties` — Create property (landlord/agent)
+- `PUT /properties/:id` — Update property (protected)
+- `DELETE /properties/:id` — Delete property (protected)
+- `GET /properties/my/properties` — Owner listings
+- `POST /properties/:id/images` — Upload images
+
+### Bookings
+- `GET /bookings` — List bookings (protected)
+- `GET /bookings/:id` — Booking detail (protected)
+- `POST /bookings` — Create booking (tenant)
+- `PUT /bookings/:id/cancel` — Cancel booking (tenant)
+- `PUT /bookings/:id/status` — Approve/reject (landlord/admin)
+- `GET /bookings/summary` — Booking summary (landlord/admin)
+
+### Reviews
+- `GET /reviews/property/:propertyId` — Public property reviews
+- `GET /reviews/my` — My reviews (protected)
+- `POST /reviews` — Create review (protected)
+- `PUT /reviews/:id` — Update review (protected)
+- `DELETE /reviews/:id` — Delete review (protected)
+- `POST /reviews/:id/respond` — Reply to review (protected)
+- Admin:
+  - `GET /reviews`
+  - `PUT /reviews/:id/approve`
+
+### Messages
+- `GET /messages/conversations` — Conversations
+- `GET /messages/unread` — Unread count
+- `GET /messages/:conversationId` — Conversation messages
+- `POST /messages` — Send message
+- `POST /messages/conversation` — Start conversation
+- `DELETE /messages/:id` — Delete message
+
+## Screenshots
+No screenshots are currently committed to this repository.
+
+You can add them in a folder like:
+`/home/runner/work/nestora-property-rental/nestora-property-rental/docs/screenshots/`
+
+Suggested captures:
+- Home page
+- Property listing page
+- Property detail page
+- Booking dashboard
+- Chat screen
+
+## Folder Structure
+```text
+nestora-property-rental/
+├── client/
 │   ├── src/
-│   │   ├── components/   # React components
-│   │   ├── pages/        # Page components
-│   │   ├── context/      # React context
-│   │   ├── hooks/        # Custom hooks
-│   │   ├── utils/        # Utility functions
-│   │   └── App.jsx       # Main app component
+│   │   ├── components/
+│   │   │   ├── booking/
+│   │   │   ├── chat/
+│   │   │   ├── common/
+│   │   │   ├── property/
+│   │   │   └── review/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   └── utils/
 │   └── package.json
-│
+├── server/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── socket/
+│   ├── server.js
+│   └── package.json
+├── TODO.md
 └── README.md
 ```
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-
-2. **Install server dependencies**
-   
-```
-bash
-   cd server
-   npm install
-   
-```
-
-3. **Install client dependencies**
-   
-```
-bash
-   cd client
-   npm install
-   
-```
-
-4. **Configure environment variables**
-
-   Create a `.env` file in the `server` directory:
-   
-```
-env
-   PORT=5000
-   MONGODB_URI=your-mongodb-uri
-   JWT_SECRET=your-secret-key
-   JWT_EXPIRE=7d
-   CLOUDINARY_CLOUD_NAME=your-cloud-name
-   CLOUDINARY_API_KEY=your-api-key
-   CLOUDINARY_API_SECRET=your-api-secret
-   CLIENT_URL=http://localhost:5173
-   
-```
-
-5. **Start MongoDB** (if using local)
-
-6. **Run the server**
-   
-```
-bash
-   cd server
-   npm run dev
-   
-```
-
-7. **Run the client**
-   
-```
-bash
-   cd client
-   npm run dev
-   
-```
-
-8. **Open your browser**
-   Navigate to `http://localhost:5173`
-
-## API Endpoints
-
-### Auth
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/me` - Get current user
-
-### Properties
-- `GET /api/properties` - Get all properties
-- `GET /api/properties/:id` - Get single property
-- `POST /api/properties` - Create property (Landlord/Agent)
-- `PUT /api/properties/:id` - Update property
-- `DELETE /api/properties/:id` - Delete property
-- `GET /api/properties/featured` - Get featured properties
-
-### Bookings
-- `GET /api/bookings` - Get all bookings
-- `POST /api/bookings` - Create booking
-- `PUT /api/bookings/:id/status` - Update booking status
-
-### Reviews
-- `GET /api/reviews/property/:id` - Get property reviews
-- `POST /api/reviews` - Create review
-
-### Messages
-- `GET /api/messages/conversations` - Get conversations
-- `GET /api/messages/:conversationId` - Get messages
-- `POST /api/messages` - Send message
-
-## User Roles
-
-### Tenant
-- Browse properties
-- Make booking requests
-- Leave reviews
-- Chat with landlords/agents
-
-### Landlord
-- All tenant features
-- Create/manage properties
-- Approve/reject booking requests
-- View earnings dashboard
-
-### Agent
-- All tenant features
-- Create/manage properties (multiple landlords)
-- Approve/reject booking requests
-
-## License
-
-ISC
+## Future Improvements
+- Add automated tests (unit + integration + e2e)
+- Add API documentation with Swagger/OpenAPI
+- Add CI workflows for lint/build/test
+- Add payment integration for online rent processing
+- Add notification center (email/push/in-app)
+- Add advanced analytics for landlords and admins
